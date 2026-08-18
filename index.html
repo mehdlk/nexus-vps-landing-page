@@ -1,13 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Servexa | Ultra-Fast Cloud VPS & Dedicated NVMe Hosting</title>
-  <meta name="description" content="Deploy high-performance virtual private servers in under 30 seconds. Powered by AMD EPYC cores, Gen4 NVMe storage, and 10Gbps unmetered network." />
+  <title>Servexa | Next-Gen Cloud VPS & High-Performance NVMe Hosting</title>
+  <meta name="description" content="Deploy high-performance virtual private servers in under 30 seconds on Servexa. Powered by AMD EPYC cores, Gen4 NVMe storage, and 10Gbps unmetered network." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   
   <style>
     /* ==========================================================================
@@ -17,7 +17,7 @@
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
 
-      /* Dark Tech Slate Color System (Harmonious & Non-clichأ©) */
+      /* Dark Tech Slate Color System */
       --bg-base: #07090e;
       --bg-surface: #0e131f;
       --bg-surface-raised: #141b2d;
@@ -31,16 +31,14 @@
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
       
-      /* Primary Accent: Electric Cyan & Deep Sapphire */
+      /* Primary Accent */
       --accent-primary: #0ea5e9;
       --accent-primary-hover: #38bdf8;
-      --accent-glow: rgba(14, 165, 233, 0.15);
+      --accent-glow: rgba(14, 165, 233, 0.18);
       
-      /* Status & Indicator Colors */
+      /* Status Colors */
       --status-emerald: #10b981;
       --status-emerald-glow: rgba(16, 185, 129, 0.2);
-      --badge-bg: rgba(14, 165, 233, 0.08);
-      --badge-border: rgba(14, 165, 233, 0.25);
 
       --radius-sm: 6px;
       --radius-md: 12px;
@@ -74,8 +72,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
-      selection-background-color: var(--accent-primary);
-      selection-color: #ffffff;
     }
 
     ::selection {
@@ -95,7 +91,6 @@
       background: none;
     }
 
-    /* Container Utility */
     .container {
       width: 100%;
       max-width: 1200px;
@@ -112,11 +107,11 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(7, 9, 14, 0.85);
+      background: rgba(7, 9, 14, 0.9);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
-      transition: border-color var(--transition-fast);
+      transition: all var(--transition-fast);
     }
 
     .nav-container {
@@ -131,14 +126,14 @@
       align-items: center;
       gap: 0.75rem;
       font-weight: 800;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       letter-spacing: -0.02em;
       color: var(--text-primary);
     }
 
     .brand-icon {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       background: linear-gradient(135deg, #0ea5e9, #0284c7);
       border-radius: var(--radius-sm);
       display: flex;
@@ -149,8 +144,8 @@
     }
 
     .brand-icon svg {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
     }
 
     .nav-links {
@@ -188,6 +183,7 @@
       border-radius: var(--radius-sm);
       transition: all var(--transition-fast);
       white-space: nowrap;
+      cursor: pointer;
     }
 
     .btn-secondary {
@@ -199,6 +195,7 @@
     .btn-secondary:hover {
       background: var(--bg-surface-hover);
       border-color: var(--border-bright);
+      transform: translateY(-1px);
     }
 
     .btn-primary {
@@ -222,6 +219,45 @@
       display: none;
       color: var(--text-primary);
       padding: 0.5rem;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(7, 9, 14, 0.98);
+      backdrop-filter: blur(16px);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.5rem;
+      gap: 1.5rem;
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: all var(--transition-smooth);
+      border-bottom: 1px solid var(--border-medium);
+    }
+
+    .mobile-drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-nav-link {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .mobile-nav-link:hover {
+      color: var(--text-primary);
     }
 
     /* ==========================================================================
@@ -350,7 +386,7 @@
       flex-shrink: 0;
     }
 
-    /* Hero Interactive Terminal / Server Box */
+    /* Hero Interactive Terminal Box */
     .server-preview-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-medium);
@@ -484,7 +520,7 @@
     }
 
     /* ==========================================================================
-       KEY METRICS / PROOF STRIP
+       KEY METRICS STRIP
        ========================================================================== */
     .metrics-strip {
       border-top: 1px solid var(--border-subtle);
@@ -577,6 +613,7 @@
       display: flex;
       flex-direction: column;
       height: 100%;
+      cursor: pointer;
     }
 
     .feature-card:hover {
@@ -653,6 +690,7 @@
       font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
+      user-select: none;
     }
 
     .billing-label.active {
@@ -894,6 +932,7 @@
       border-radius: var(--radius-full);
       background: var(--bg-surface-raised);
       outline: none;
+      cursor: pointer;
     }
 
     .custom-range::-webkit-slider-thumb {
@@ -964,10 +1003,33 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
     }
 
-    .flag-icon {
-      font-size: 1.5rem;
+    .location-card:hover {
+      background: var(--bg-surface-raised);
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .location-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-base);
+      border: 1px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.8125rem;
+      color: var(--accent-primary);
+    }
+
+    .location-info {
+      flex-grow: 1;
     }
 
     .location-info h4 {
@@ -980,6 +1042,72 @@
       font-size: 0.75rem;
       font-family: var(--font-mono);
       color: var(--status-emerald);
+    }
+
+    /* ==========================================================================
+       FAQ SECTION
+       ========================================================================== */
+    .faq-section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+    }
+
+    .faq-accordion {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: border-color var(--transition-fast);
+    }
+
+    .faq-item.active {
+      border-color: var(--border-bright);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .faq-icon {
+      color: var(--accent-primary);
+      transition: transform var(--transition-fast);
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+      padding: 0 1.5rem;
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 0 1.5rem 1.25rem;
     }
 
     /* ==========================================================================
@@ -1022,13 +1150,15 @@
       gap: 0.75rem;
     }
 
-    .footer-links a {
+    .footer-links a, .footer-links button {
       font-size: 0.875rem;
       color: var(--text-secondary);
       transition: color var(--transition-fast);
+      text-align: left;
+      cursor: pointer;
     }
 
-    .footer-links a:hover {
+    .footer-links a:hover, .footer-links button:hover {
       color: var(--text-primary);
     }
 
@@ -1040,6 +1170,204 @@
       justify-content: space-between;
       font-size: 0.8125rem;
       color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       INTERACTIVE MODALS & TOAST NOTIFICATIONS
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 6, 9, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-smooth);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-dialog {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 580px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transform: scale(0.95) translateY(10px);
+      transition: transform var(--transition-smooth);
+    }
+
+    .modal-overlay.active .modal-dialog {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-surface-raised);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .modal-close-btn {
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--transition-fast);
+    }
+
+    .modal-close-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-surface-hover);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .os-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .os-option {
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-base);
+      padding: 0.75rem 0.5rem;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .os-option:hover {
+      border-color: var(--border-bright);
+    }
+
+    .os-option.selected {
+      border-color: var(--accent-primary);
+      background: rgba(14, 165, 233, 0.1);
+    }
+
+    .os-option .os-name {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      display: block;
+      color: var(--text-primary);
+    }
+
+    .deploy-summary-card {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .deploy-summary-price {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-bright);
+      color: var(--text-primary);
+      padding: 0.875rem 1.25rem;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      color: var(--status-emerald);
+      flex-shrink: 0;
     }
 
     /* ==========================================================================
@@ -1073,6 +1401,9 @@
         grid-template-columns: 1fr;
       }
       .locations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .os-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -1132,17 +1463,17 @@
 
       <nav>
         <ul class="nav-links">
-          <li><a href="#features" class="nav-link" id="nav-features">Features</a></li>
-          <li><a href="#pricing" class="nav-link" id="nav-pricing">Pricing</a></li>
-          <li><a href="#calculator" class="nav-link" id="nav-calc">Customizer</a></li>
-          <li><a href="#locations" class="nav-link" id="nav-locations">Datacenters</a></li>
-          <li><a href="#docs" class="nav-link" id="nav-docs">Docs & API</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#pricing" class="nav-link">Pricing</a></li>
+          <li><a href="#calculator" class="nav-link">Customizer</a></li>
+          <li><a href="#locations" class="nav-link">Datacenters</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <a href="#login" class="btn btn-secondary" id="btn-portal">Client Login</a>
-        <a href="#pricing" class="btn btn-primary" id="btn-deploy-nav">Deploy VPS</a>
+        <button class="btn btn-secondary" id="btn-login-header">Client Login</button>
+        <button class="btn btn-primary" id="btn-deploy-header">Deploy VPS</button>
         <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1153,6 +1484,19 @@
       </div>
     </div>
   </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <a href="#features" class="mobile-nav-link" onclick="closeMobileMenu()">Features</a>
+    <a href="#pricing" class="mobile-nav-link" onclick="closeMobileMenu()">Pricing</a>
+    <a href="#calculator" class="mobile-nav-link" onclick="closeMobileMenu()">Custom Spec Builder</a>
+    <a href="#locations" class="mobile-nav-link" onclick="closeMobileMenu()">Datacenter Edge</a>
+    <a href="#faq" class="mobile-nav-link" onclick="closeMobileMenu()">FAQ</a>
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
+      <button class="btn btn-secondary" onclick="closeMobileMenu(); openLoginModal();">Client Portal Login</button>
+      <button class="btn btn-primary" onclick="closeMobileMenu(); openDeployModal('Pro Compute', '14.99', '2 Dedicated Cores', '4 GB ECC', '80 GB Gen4');">Deploy VPS Server</button>
+    </div>
+  </div>
 
   <!-- ==========================================================================
        HERO SECTION
@@ -1165,7 +1509,7 @@
         <div class="hero-content">
           <div class="live-status-pill">
             <span class="status-dot"></span>
-            <span>All 24 Global Datacenters 100% Operational</span>
+            <span>All 24 Global Edge Zones 100% Operational</span>
           </div>
 
           <h1 class="hero-title">
@@ -1173,18 +1517,18 @@
           </h1>
 
           <p class="hero-subtitle">
-            Deploy enterprise-grade AMD EPYCâ„¢ and Intel Xeonآ® virtual servers with PCIe 4.0 NVMe storage in under 30 seconds. Full root access, unmetered 10Gbps uplinks, and DDoS immunity included.
+            Deploy enterprise-grade AMD EPYC™ and Intel Xeon® virtual servers with PCIe 4.0 NVMe storage in under 30 seconds. Full root access, unmetered 10Gbps uplinks, and DDoS immunity included.
           </p>
 
           <div class="hero-actions">
-            <a href="#pricing" class="btn btn-primary" id="hero-cta-deploy">
+            <button class="btn btn-primary" id="hero-cta-deploy" onclick="openDeployModal('Pro Compute', '14.99', '2 Dedicated Cores', '4 GB ECC', '80 GB Gen4')">
               <span>Deploy Server Now</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
-            </a>
-            <a href="#calculator" class="btn btn-secondary" id="hero-cta-calc">Configure Custom Spec</a>
+            </button>
+            <a href="#calculator" class="btn btn-secondary">Configure Custom Spec</a>
           </div>
 
           <div class="hero-guarantee">
@@ -1217,19 +1561,19 @@
                 <span></span><span></span><span></span>
               </div>
               <span class="terminal-label">servexa-node-fra01.sh</span>
-              <span style="font-size: 0.75rem; color: var(--status-emerald); font-family: var(--font-mono);">ONLINE</span>
+              <span style="font-size: 0.75rem; color: var(--status-emerald); font-family: var(--font-mono); font-weight: 700;">ONLINE</span>
             </div>
             <div class="server-card-body">
               
               <div class="server-telemetry-row">
                 <div class="telemetry-block">
                   <div class="telemetry-label">CPU Usage</div>
-                  <div class="telemetry-value">3.4%</div>
+                  <div class="telemetry-value" id="telemetry-cpu">3.4%</div>
                   <div class="telemetry-sub">AMD EPYC 9654</div>
                 </div>
                 <div class="telemetry-block">
                   <div class="telemetry-label">Disk IOPS</div>
-                  <div class="telemetry-value">124.5k</div>
+                  <div class="telemetry-value" id="telemetry-iops">124.5k</div>
                   <div class="telemetry-sub">Gen4 NVMe RAID</div>
                 </div>
                 <div class="telemetry-block">
@@ -1241,8 +1585,8 @@
 
               <div class="interactive-cli">
                 <div class="cli-line">
-                  <span class="cli-prompt">root@nexus-vps:~#</span>
-                  <span>curl -sSL https://get.Servexa.io/provision | bash</span>
+                  <span class="cli-prompt">root@servexa:~#</span>
+                  <span>curl -sSL https://get.servexa.space/provision | bash</span>
                 </div>
                 <div class="cli-line cli-dim">
                   <span>[+] Allocating dedicated vCPU cores... Done</span>
@@ -1257,7 +1601,7 @@
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
-                  <span>Server ready in 14.8s. IPv4: 194.26.29.112 assigned.</span>
+                  <span>Server ready in 14.8s. IPv4: 104.21.61.98 assigned.</span>
                 </div>
               </div>
 
@@ -1293,20 +1637,20 @@
     </section>
 
     <!-- ==========================================================================
-         FEATURE CARDS
-         ========================================================================== -->
+       FEATURES SECTION
+       ========================================================================== -->
     <section class="features-section" id="features">
       <div class="container">
         
         <div class="section-header">
           <span class="section-tag">Engineered for Reliability</span>
           <h2 class="section-title">Enterprise Cloud Architecture Without the Hyperscaler Complexity</h2>
-          <p class="section-desc">Every VPS instance runs on pure enterprise hardware with isolated virtualization, predictable billing, and uncompromised performance.</p>
+          <p class="section-desc">Every Servexa instance runs on pure enterprise hardware with isolated virtualization, predictable billing, and uncompromised performance.</p>
         </div>
 
         <div class="features-grid">
           
-          <div class="feature-card" id="feature-nvme">
+          <div class="feature-card" onclick="showToast('Gen4 NVMe: 7,000 MB/s read speed with 150,000 IOPS benchmark active.')">
             <div class="feature-icon-wrapper">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 12H2"></path>
@@ -1320,7 +1664,7 @@
             <div class="feature-tag">Up to 150k IOPS &rarr;</div>
           </div>
 
-          <div class="feature-card" id="feature-cpu">
+          <div class="feature-card" onclick="showToast('Dedicated EPYC: 100% hardware-isolated CPU cycles with zero noisy neighbors.')">
             <div class="feature-icon-wrapper">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
@@ -1335,12 +1679,12 @@
                 <line x1="1" y1="14" x2="4" y2="14"></line>
               </svg>
             </div>
-            <h3 class="feature-title">Dedicated EPYCâ„¢ Cores</h3>
+            <h3 class="feature-title">Dedicated EPYC™ Cores</h3>
             <p class="feature-body">Zero noisy neighbors. Our KVM virtualization enforces strict hardware isolation so your compute cycles, CPU cache, and RAM allocations are 100% dedicated to you.</p>
             <div class="feature-tag">KVM Full Virtualization &rarr;</div>
           </div>
 
-          <div class="feature-card" id="feature-ddos">
+          <div class="feature-card" onclick="showToast('DDoS Shield: 3.2 Tbps real-time volumetric packet filtering active.')">
             <div class="feature-icon-wrapper">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
@@ -1351,7 +1695,7 @@
             <div class="feature-tag">Free on All Tiers &rarr;</div>
           </div>
 
-          <div class="feature-card" id="feature-network">
+          <div class="feature-card" onclick="showToast('10Gbps Uplinks: Direct Tier-1 carrier transit with ultra-low jitter.')">
             <div class="feature-icon-wrapper">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -1364,7 +1708,7 @@
             <div class="feature-tag">BGP Anycast Routing &rarr;</div>
           </div>
 
-          <div class="feature-card" id="feature-root">
+          <div class="feature-card" onclick="showToast('Full Root: Custom ISO mounting, Docker, and Kubernetes clusters fully supported.')">
             <div class="feature-icon-wrapper">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="4 17 10 11 4 5"></polyline>
@@ -1376,7 +1720,7 @@
             <div class="feature-tag">SSH Keys & VNC Console &rarr;</div>
           </div>
 
-          <div class="feature-card" id="feature-snapshots">
+          <div class="feature-card" onclick="showToast('Automated Snapshots: 1-click instance rollback and cloning available.')">
             <div class="feature-icon-wrapper">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -1464,7 +1808,7 @@
               </li>
             </ul>
 
-            <a href="#deploy-starter" class="btn btn-secondary">Deploy Starter</a>
+            <button class="btn btn-secondary" onclick="openDeployModal('Starter Cloud', getCurrentPlanPrice('4.99', '3.99'), '1 vCPU Core', '2 GB DDR5', '40 GB NVMe')">Deploy Starter</button>
           </div>
 
           <!-- Plan 2: Pro Compute (FEATURED) -->
@@ -1517,7 +1861,7 @@
               </li>
             </ul>
 
-            <a href="#deploy-pro" class="btn btn-primary">Deploy Pro VPS</a>
+            <button class="btn btn-primary" onclick="openDeployModal('Pro Compute', getCurrentPlanPrice('14.99', '11.99'), '2 Dedicated Cores', '4 GB ECC', '80 GB Gen4')">Deploy Pro VPS</button>
           </div>
 
           <!-- Plan 3: Scale Master -->
@@ -1565,7 +1909,7 @@
               </li>
             </ul>
 
-            <a href="#deploy-scale" class="btn btn-secondary">Deploy Scale</a>
+            <button class="btn btn-secondary" onclick="openDeployModal('Scale Master', getCurrentPlanPrice('29.99', '23.99'), '4 Dedicated Cores', '8 GB ECC', '160 GB Gen4')">Deploy Scale</button>
           </div>
 
           <!-- Plan 4: Enterprise Dedicated -->
@@ -1601,7 +1945,7 @@
             <ul class="plan-features-list">
               <li class="plan-feature-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>4 Dedicated IPv4 + /48 IPv6 Subnet</span>
+                <span>4 Dedicated IPv4 + /48 Subnet</span>
               </li>
               <li class="plan-feature-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -1613,7 +1957,7 @@
               </li>
             </ul>
 
-            <a href="#deploy-enterprise" class="btn btn-secondary">Deploy Enterprise</a>
+            <button class="btn btn-secondary" onclick="openDeployModal('Enterprise Node', getCurrentPlanPrice('59.99', '47.99'), '8 Dedicated Cores', '16 GB ECC', '320 GB Gen4')">Deploy Enterprise</button>
           </div>
 
         </div>
@@ -1664,11 +2008,11 @@
 
           <div class="calc-summary-box">
             <div class="calc-price-title">Estimated Monthly Cost</div>
-            <div class="calc-total-price" id="calc-price-display">$14.00<span>/mo</span></div>
+            <div class="calc-total-price" id="calc-price-display">$16.00<span>/mo</span></div>
             <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-              Billed hourly at ~$0.019/hr. Unmetered 10Gbps port & DDoS protection included.
+              Billed hourly at ~$0.022/hr. Unmetered 10Gbps port & DDoS protection included.
             </p>
-            <button class="btn btn-primary" style="width: 100%;" id="btn-deploy-custom">Deploy Custom Instance</button>
+            <button class="btn btn-primary" style="width: 100%;" id="btn-deploy-custom" onclick="deployCustomSpec()">Deploy Custom Instance</button>
           </div>
         </div>
 
@@ -1683,64 +2027,119 @@
         <div class="section-header">
           <span class="section-tag">Global Low Latency</span>
           <h2 class="section-title">24 Tier-4 Datacenter Edge Locations</h2>
-          <p class="section-desc">Host your workloads closer to your global audience with average edge latency under 15ms.</p>
+          <p class="section-desc">Host your workloads closer to your global audience. Click any region to run a simulated latency ping test.</p>
         </div>
 
         <div class="locations-grid">
-          <div class="location-card">
-            <span class="flag-icon">ًں‡©ًں‡ھ</span>
+          <div class="location-card" onclick="testPing(this, 'Frankfurt (FRA-01)', 1.2)">
+            <div class="location-badge">FRA</div>
             <div class="location-info">
               <h4>Frankfurt, Germany</h4>
-              <p>â—ڈ 1.2ms Avg IXP Latency</p>
+              <p class="ping-status">● 1.2ms Avg IXP Latency</p>
             </div>
           </div>
-          <div class="location-card">
-            <span class="flag-icon">ًں‡؛ًں‡¸</span>
+          <div class="location-card" onclick="testPing(this, 'New York (NYC-02)', 2.8)">
+            <div class="location-badge">NYC</div>
             <div class="location-info">
               <h4>New York, USA</h4>
-              <p>â—ڈ 2.8ms East Coast Hub</p>
+              <p class="ping-status">● 2.8ms East Coast Hub</p>
             </div>
           </div>
-          <div class="location-card">
-            <span class="flag-icon">ًں‡¯ًں‡µ</span>
+          <div class="location-card" onclick="testPing(this, 'Tokyo (TYO-01)', 3.1)">
+            <div class="location-badge">TYO</div>
             <div class="location-info">
               <h4>Tokyo, Japan</h4>
-              <p>â—ڈ 3.1ms AP-East Hub</p>
+              <p class="ping-status">● 3.1ms AP-East Hub</p>
             </div>
           </div>
-          <div class="location-card">
-            <span class="flag-icon">ًں‡¸ًں‡¬</span>
+          <div class="location-card" onclick="testPing(this, 'Singapore (SIN-01)', 1.9)">
+            <div class="location-badge">SIN</div>
             <div class="location-info">
               <h4>Singapore</h4>
-              <p>â—ڈ 1.9ms ASEAN Gateway</p>
+              <p class="ping-status">● 1.9ms ASEAN Gateway</p>
             </div>
           </div>
-          <div class="location-card">
-            <span class="flag-icon">ًں‡¬ًں‡§</span>
+          <div class="location-card" onclick="testPing(this, 'London (LON-01)', 1.4)">
+            <div class="location-badge">LON</div>
             <div class="location-info">
               <h4>London, UK</h4>
-              <p>â—ڈ 1.4ms LINX Connected</p>
+              <p class="ping-status">● 1.4ms LINX Connected</p>
             </div>
           </div>
-          <div class="location-card">
-            <span class="flag-icon">ًں‡؛ًں‡¸</span>
+          <div class="location-card" onclick="testPing(this, 'San Jose (SJC-01)', 1.8)">
+            <div class="location-badge">SJC</div>
             <div class="location-info">
               <h4>San Jose, USA</h4>
-              <p>â—ڈ 1.8ms Silicon Valley</p>
+              <p class="ping-status">● 1.8ms Silicon Valley</p>
             </div>
           </div>
-          <div class="location-card">
-            <span class="flag-icon">ًں‡¦ًں‡؛</span>
+          <div class="location-card" onclick="testPing(this, 'Sydney (SYD-01)', 4.2)">
+            <div class="location-badge">SYD</div>
             <div class="location-info">
               <h4>Sydney, Australia</h4>
-              <p>â—ڈ 4.2ms OCE Hub</p>
+              <p class="ping-status">● 4.2ms OCE Hub</p>
             </div>
           </div>
-          <div class="location-card">
-            <span class="flag-icon">ًں‡³ًں‡±</span>
+          <div class="location-card" onclick="testPing(this, 'Amsterdam (AMS-01)', 0.9)">
+            <div class="location-badge">AMS</div>
             <div class="location-info">
               <h4>Amsterdam, NL</h4>
-              <p>â—ڈ 0.9ms AMS-IX Node</p>
+              <p class="ping-status">● 0.9ms AMS-IX Node</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FAQ SECTION
+         ========================================================================== -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Common Questions</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-desc">Everything you need to know about our cloud servers, hardware, and billing.</p>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-item active">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span>How fast is server provisioning?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              All VPS instances are fully automated and provisioned via our orchestrator in under 30 seconds from payment confirmation. Your root credentials and IP are generated instantly.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span>Which operating systems can I install?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              We provide 1-click images for Ubuntu 24.04/22.04 LTS, Debian 12, Rocky Linux 9, AlmaLinux, Arch Linux, Alpine, and Windows Server. You can also mount any custom ISO via our control panel.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span>What kind of DDoS protection is included?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              Every server includes free, always-on 3.2 Tbps multi-layer DDoS protection filtering SYN floods, UDP amplification, HTTP floods, and NTP attacks automatically with sub-second mitigation.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span>Can I upgrade or resize my VPS later?</span>
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              Yes, you can scale CPU, RAM, and NVMe disk up or down seamlessly at any time with only a fast 10-second reboot. Billing is pro-rated down to the exact second.
             </div>
           </div>
         </div>
@@ -1774,33 +2173,33 @@
         <div class="footer-column">
           <h5>Products</h5>
           <ul class="footer-links">
-            <li><a href="#pricing">Cloud NVMe VPS</a></li>
-            <li><a href="#pricing">Dedicated CPU Instances</a></li>
-            <li><a href="#pricing">Kubernetes Node Pools</a></li>
-            <li><a href="#pricing">Block Storage Volumes</a></li>
-            <li><a href="#pricing">Object Storage (S3)</a></li>
+            <li><button onclick="openDeployModal('Cloud NVMe VPS', '14.99', '2 vCPU', '4GB RAM', '80GB NVMe')">Cloud NVMe VPS</button></li>
+            <li><button onclick="openDeployModal('Dedicated CPU', '59.99', '8 vCPU', '16GB RAM', '320GB NVMe')">Dedicated CPU Instances</button></li>
+            <li><button onclick="showToast('Kubernetes Engine: Node clusters available in all 24 regions.')">Kubernetes Node Pools</button></li>
+            <li><button onclick="showToast('NVMe Block Storage: Up to 10TB per volume attachable.')">Block Storage Volumes</button></li>
+            <li><button onclick="showToast('S3 Compatible Object Storage active with 99.999999999% durability.')">Object Storage (S3)</button></li>
           </ul>
         </div>
 
         <div class="footer-column">
           <h5>Resources</h5>
           <ul class="footer-links">
-            <li><a href="#">API Documentation</a></li>
-            <li><a href="#">Terraform Provider</a></li>
-            <li><a href="#">Looking Glass & Speed Test</a></li>
-            <li><a href="#">System Status Dashboard</a></li>
-            <li><a href="#">Community Tutorials</a></li>
+            <li><button onclick="showToast('API Docs: REST API v2 & Terraform Provider v3.1 ready.')">API Documentation</button></li>
+            <li><button onclick="showToast('Terraform Provider: github.com/servexa/terraform-provider-servexa')">Terraform Provider</button></li>
+            <li><button onclick="document.getElementById('locations').scrollIntoView({behavior:'smooth'})">Looking Glass & Speed Test</button></li>
+            <li><button onclick="showToast('All 24 regions operational. 100% SLA status active.')">System Status Dashboard</button></li>
+            <li><button onclick="showToast('Community Tutorials: Docker, WireGuard, and Node.js setup guides.')">Community Tutorials</button></li>
           </ul>
         </div>
 
         <div class="footer-column">
           <h5>Company</h5>
           <ul class="footer-links">
-            <li><a href="#">About Servexa</a></li>
-            <li><a href="#">SLA & Network Guarantee</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Contact 24/7 Support</a></li>
+            <li><button onclick="showToast('Servexa Cloud Inc: Next-gen infrastructure since 2026.')">About Servexa</button></li>
+            <li><button onclick="showToast('99.99% SLA Guarantee: Financial credit backing included.')">SLA & Network Guarantee</button></li>
+            <li><button onclick="showToast('Privacy Policy: Zero data selling, GDPR and ISO 27001 compliant.')">Privacy Policy</button></li>
+            <li><button onclick="showToast('Terms: 7-day no questions asked money-back guarantee.')">Terms of Service</button></li>
+            <li><button onclick="openLoginModal('support')">Contact 24/7 Support</button></li>
           </ul>
         </div>
 
@@ -1809,101 +2208,429 @@
       <div class="footer-bottom">
         <div>&copy; 2026 Servexa Cloud Infrastructure Inc. All rights reserved.</div>
         <div style="display: flex; gap: 1.5rem;">
-          <a href="#">Status: 100% Operational</a>
-          <a href="#">Security ISO 27001 Certified</a>
+          <a href="#hero" style="color: var(--status-emerald);">● Status: 100% Operational</a>
+          <span style="color: var(--text-muted);">Security ISO 27001 Certified</span>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- ==========================================================================
+       DEPLOYMENT MODAL (INTERACTIVE)
+       ========================================================================== -->
+  <div class="modal-overlay" id="deploy-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-plan-title">Deploy Server Instance</h3>
+        <button class="modal-close-btn" onclick="closeDeployModal()" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="deploy-summary-card">
+          <div>
+            <h4 id="summary-plan-name" style="font-weight: 700;">Pro Compute</h4>
+            <p id="summary-plan-specs" style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 2px;">2 Cores / 4 GB RAM / 80 GB NVMe</p>
+          </div>
+          <div class="deploy-summary-price" id="summary-plan-price">$14.99/mo</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Select Operating System</label>
+          <div class="os-grid">
+            <div class="os-option selected" onclick="selectOs(this, 'Ubuntu 24.04 LTS')">
+              <span class="os-name">Ubuntu</span>
+              <span style="font-size: 0.6875rem; color: var(--text-muted);">24.04 LTS</span>
+            </div>
+            <div class="os-option" onclick="selectOs(this, 'Debian 12 Bookworm')">
+              <span class="os-name">Debian</span>
+              <span style="font-size: 0.6875rem; color: var(--text-muted);">12 Bookworm</span>
+            </div>
+            <div class="os-option" onclick="selectOs(this, 'Rocky Linux 9')">
+              <span class="os-name">Rocky Linux</span>
+              <span style="font-size: 0.6875rem; color: var(--text-muted);">9.4 Enterprise</span>
+            </div>
+            <div class="os-option" onclick="selectOs(this, 'Alpine 3.19')">
+              <span class="os-name">Alpine</span>
+              <span style="font-size: 0.6875rem; color: var(--text-muted);">3.19 Minimal</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Select Datacenter Region</label>
+          <select class="form-input" id="deploy-region" style="cursor: pointer;">
+            <option value="FRA">🇩🇪 Frankfurt, Germany (FRA-01) - 1.2ms</option>
+            <option value="NYC">🇺🇸 New York, USA (NYC-02) - 2.8ms</option>
+            <option value="SIN">🇸🇬 Singapore (SIN-01) - 1.9ms</option>
+            <option value="TYO">🇯🇵 Tokyo, Japan (TYO-01) - 3.1ms</option>
+            <option value="LON">🇬🇧 London, UK (LON-01) - 1.4ms</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Server Hostname</label>
+          <input type="text" class="form-input" id="deploy-hostname" value="servexa-srv-01" placeholder="e.g. web-node-01" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Root Password or SSH Public Key</label>
+          <input type="password" class="form-input" id="deploy-auth" value="••••••••••••" placeholder="Enter secure password or paste ssh-ed25519" />
+        </div>
+
+        <div id="deploy-progress-box" style="display: none; background: #05070a; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-medium);">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; margin-bottom: 0.5rem;">
+            <span id="deploy-step-text" style="color: var(--accent-primary); font-family: var(--font-mono);">Provisioning NVMe storage...</span>
+            <span id="deploy-step-pct" style="color: var(--text-muted); font-family: var(--font-mono);">45%</span>
+          </div>
+          <div style="width: 100%; height: 6px; background: #1e293b; border-radius: 99px; overflow: hidden;">
+            <div id="deploy-step-bar" style="width: 45%; height: 100%; background: var(--accent-primary); transition: width 0.4s ease;"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-confirm-deploy" style="width: 100%; padding: 0.875rem;" onclick="executeDeployment()">
+          <span>Launch Instance Now</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       LOGIN MODAL (INTERACTIVE)
+       ========================================================================== -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 id="login-modal-title">Servexa Client Portal</h3>
+        <button class="modal-close-btn" onclick="closeLoginModal()" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn btn-secondary" style="flex: 1; font-size: 0.8125rem; padding: 0.5rem;" onclick="showToast('GitHub OAuth redirect simulation successful.')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            <span>GitHub</span>
+          </button>
+          <button class="btn btn-secondary" style="flex: 1; font-size: 0.8125rem; padding: 0.5rem;" onclick="showToast('Google OAuth redirect simulation successful.')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg>
+            <span>Google</span>
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0;">
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Or with email</span>
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="login-email" placeholder="name@company.com" value="admin@servexa.space" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="login-pass" placeholder="••••••••••••" value="password123" />
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%; padding: 0.875rem;" onclick="executeLogin()">Sign In to Dashboard</button>
+
+        <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">
+          Protected by 2FA & WebAuthn Security. <a href="#" onclick="showToast('Reset email link dispatched to your inbox.');" style="color: var(--accent-primary);">Forgot password?</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ==========================================================================
        INTERACTIVE JAVASCRIPT LOGIC
        ========================================================================== -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Billing Period Toggle (Monthly vs Annual with 20% discount)
-      const billingToggle = document.getElementById('billing-toggle');
-      const labelMonthly = document.getElementById('label-monthly');
-      const labelAnnual = document.getElementById('label-annual');
-      const priceAmounts = document.querySelectorAll('.pricing-card .amount');
-      let isAnnual = false;
+    let isAnnual = false;
+    let selectedOperatingSystem = 'Ubuntu 24.04 LTS';
 
-      function updatePricing() {
-        if (isAnnual) {
-          billingToggle.classList.add('annual');
-          labelAnnual.classList.add('active');
-          labelMonthly.classList.remove('active');
-        } else {
-          billingToggle.classList.remove('annual');
-          labelMonthly.classList.add('active');
-          labelAnnual.classList.remove('active');
-        }
+    // 1. Toast Notification Helper
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <svg class="toast-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+      
+      // Trigger animation
+      setTimeout(() => toast.classList.add('show'), 10);
 
-        priceAmounts.forEach(amt => {
-          const val = isAnnual ? amt.getAttribute('data-annual') : amt.getAttribute('data-monthly');
-          if (val) {
-            amt.textContent = val;
-          }
-        });
+      // Remove after 3.5 seconds
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // 2. Billing Toggle Logic
+    const billingToggle = document.getElementById('billing-toggle');
+    const labelMonthly = document.getElementById('label-monthly');
+    const labelAnnual = document.getElementById('label-annual');
+    const priceAmounts = document.querySelectorAll('.pricing-card .amount');
+
+    function updatePricing() {
+      if (isAnnual) {
+        billingToggle.classList.add('annual');
+        labelAnnual.classList.add('active');
+        labelMonthly.classList.remove('active');
+      } else {
+        billingToggle.classList.remove('annual');
+        labelMonthly.classList.add('active');
+        labelAnnual.classList.remove('active');
       }
 
-      billingToggle.addEventListener('click', () => {
-        isAnnual = !isAnnual;
-        updatePricing();
-      });
-
-      labelMonthly.addEventListener('click', () => {
-        isAnnual = false;
-        updatePricing();
-      });
-
-      labelAnnual.addEventListener('click', () => {
-        isAnnual = true;
-        updatePricing();
-      });
-
-      // 2. Custom Spec Calculator
-      const cpuSlider = document.getElementById('cpu-slider');
-      const ramSlider = document.getElementById('ram-slider');
-      const diskSlider = document.getElementById('disk-slider');
-
-      const cpuText = document.getElementById('cpu-val-text');
-      const ramText = document.getElementById('ram-val-text');
-      const diskText = document.getElementById('disk-val-text');
-      const calcPriceDisplay = document.getElementById('calc-price-display');
-
-      function calculateCustomPrice() {
-        const cpu = parseInt(cpuSlider.value, 10);
-        const ram = parseInt(ramSlider.value, 10);
-        const disk = parseInt(diskSlider.value, 10);
-
-        cpuText.textContent = `${cpu} ${cpu === 1 ? 'Core' : 'Cores'} (AMD EPYC)`;
-        ramText.textContent = `${ram} GB`;
-        diskText.textContent = `${disk} GB`;
-
-        // Pricing formula: $3/vCPU + $1.5/GB RAM + $0.05/GB NVMe Storage
-        const monthlyTotal = (cpu * 3) + (ram * 1.5) + (disk * 0.05);
-        calcPriceDisplay.innerHTML = `$${monthlyTotal.toFixed(2)}<span>/mo</span>`;
-      }
-
-      cpuSlider.addEventListener('input', calculateCustomPrice);
-      ramSlider.addEventListener('input', calculateCustomPrice);
-      diskSlider.addEventListener('input', calculateCustomPrice);
-      calculateCustomPrice();
-
-      // 3. Smooth header backdrop tweak on scroll
-      const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
-          navbar.style.borderBottomColor = 'rgba(45, 59, 85, 0.8)';
-          navbar.style.background = 'rgba(7, 9, 14, 0.95)';
-        } else {
-          navbar.style.borderBottomColor = 'var(--border-subtle)';
-          navbar.style.background = 'rgba(7, 9, 14, 0.85)';
+      priceAmounts.forEach(amt => {
+        const val = isAnnual ? amt.getAttribute('data-annual') : amt.getAttribute('data-monthly');
+        if (val) {
+          amt.textContent = val;
         }
       });
+    }
+
+    function getCurrentPlanPrice(monthly, annual) {
+      return isAnnual ? annual : monthly;
+    }
+
+    billingToggle.addEventListener('click', () => {
+      isAnnual = !isAnnual;
+      updatePricing();
+      showToast(isAnnual ? 'Switched to Annual Billing (20% Savings applied)!' : 'Switched to Monthly Billing.');
     });
+
+    labelMonthly.addEventListener('click', () => {
+      isAnnual = false;
+      updatePricing();
+    });
+
+    labelAnnual.addEventListener('click', () => {
+      isAnnual = true;
+      updatePricing();
+    });
+
+    // 3. Custom Sizing Slider Calculator
+    const cpuSlider = document.getElementById('cpu-slider');
+    const ramSlider = document.getElementById('ram-slider');
+    const diskSlider = document.getElementById('disk-slider');
+
+    const cpuText = document.getElementById('cpu-val-text');
+    const ramText = document.getElementById('ram-val-text');
+    const diskText = document.getElementById('disk-val-text');
+    const calcPriceDisplay = document.getElementById('calc-price-display');
+
+    function calculateCustomPrice() {
+      const cpu = parseInt(cpuSlider.value, 10);
+      const ram = parseInt(ramSlider.value, 10);
+      const disk = parseInt(diskSlider.value, 10);
+
+      cpuText.textContent = `${cpu} ${cpu === 1 ? 'Core' : 'Cores'} (AMD EPYC)`;
+      ramText.textContent = `${ram} GB`;
+      diskText.textContent = `${disk} GB`;
+
+      // $3/vCPU + $1.5/GB RAM + $0.05/GB NVMe Storage
+      const monthlyTotal = (cpu * 3) + (ram * 1.5) + (disk * 0.05);
+      calcPriceDisplay.innerHTML = `$${monthlyTotal.toFixed(2)}<span>/mo</span>`;
+      return { cpu, ram, disk, price: monthlyTotal.toFixed(2) };
+    }
+
+    cpuSlider.addEventListener('input', calculateCustomPrice);
+    ramSlider.addEventListener('input', calculateCustomPrice);
+    diskSlider.addEventListener('input', calculateCustomPrice);
+    calculateCustomPrice();
+
+    function deployCustomSpec() {
+      const spec = calculateCustomPrice();
+      openDeployModal('Custom Spec Instance', spec.price, `${spec.cpu} EPYC Cores`, `${spec.ram} GB DDR5 RAM`, `${spec.disk} GB NVMe`);
+    }
+
+    // 4. Modal Open / Close Controls
+    const deployModal = document.getElementById('deploy-modal');
+    const loginModal = document.getElementById('login-modal');
+
+    function openDeployModal(name, price, cpu, ram, disk) {
+      document.getElementById('summary-plan-name').textContent = name;
+      document.getElementById('summary-plan-specs').textContent = `${cpu} • ${ram} • ${disk}`;
+      document.getElementById('summary-plan-price').textContent = `$${price}/mo`;
+      document.getElementById('deploy-progress-box').style.display = 'none';
+      document.getElementById('btn-confirm-deploy').style.display = 'inline-flex';
+      deployModal.classList.add('active');
+    }
+
+    function closeDeployModal() {
+      deployModal.classList.remove('active');
+    }
+
+    function openLoginModal(type) {
+      if (type === 'support') {
+        document.getElementById('login-modal-title').textContent = '24/7 Priority Support Portal';
+      } else {
+        document.getElementById('login-modal-title').textContent = 'Servexa Client Portal';
+      }
+      loginModal.classList.add('active');
+    }
+
+    function closeLoginModal() {
+      loginModal.classList.remove('active');
+    }
+
+    // Modal Close on backdrop click
+    deployModal.addEventListener('click', (e) => {
+      if (e.target === deployModal) closeDeployModal();
+    });
+
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) closeLoginModal();
+    });
+
+    // Close on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDeployModal();
+        closeLoginModal();
+        closeMobileMenu();
+      }
+    });
+
+    // Header buttons
+    document.getElementById('btn-login-header').addEventListener('click', () => openLoginModal());
+    document.getElementById('btn-deploy-header').addEventListener('click', () => {
+      openDeployModal('Pro Compute', getCurrentPlanPrice('14.99', '11.99'), '2 Dedicated Cores', '4 GB ECC', '80 GB Gen4');
+    });
+
+    // 5. OS Selector
+    function selectOs(element, osName) {
+      document.querySelectorAll('.os-option').forEach(el => el.classList.remove('selected'));
+      element.classList.add('selected');
+      selectedOperatingSystem = osName;
+      showToast(`Selected ${osName}`);
+    }
+
+    // 6. Execute Simulated Deployment
+    function executeDeployment() {
+      const progressBox = document.getElementById('deploy-progress-box');
+      const stepText = document.getElementById('deploy-step-text');
+      const stepPct = document.getElementById('deploy-step-pct');
+      const stepBar = document.getElementById('deploy-step-bar');
+      const confirmBtn = document.getElementById('btn-confirm-deploy');
+      const hostname = document.getElementById('deploy-hostname').value || 'servexa-vps-01';
+      const region = document.getElementById('deploy-region').value;
+
+      confirmBtn.style.display = 'none';
+      progressBox.style.display = 'block';
+
+      stepText.textContent = `Allocating KVM hypervisor in ${region}...`;
+      stepPct.textContent = '20%';
+      stepBar.style.width = '20%';
+
+      setTimeout(() => {
+        stepText.textContent = `Formatting Gen4 NVMe & writing ${selectedOperatingSystem}...`;
+        stepPct.textContent = '65%';
+        stepBar.style.width = '65%';
+      }, 1000);
+
+      setTimeout(() => {
+        stepText.textContent = `Assigning 10Gbps uplink & IPv4 (104.21.61.98)...`;
+        stepPct.textContent = '90%';
+        stepBar.style.width = '90%';
+      }, 2000);
+
+      setTimeout(() => {
+        stepText.textContent = `✓ Server ${hostname} is ONLINE and ready!`;
+        stepPct.textContent = '100%';
+        stepBar.style.width = '100%';
+        stepBar.style.background = 'var(--status-emerald)';
+
+        setTimeout(() => {
+          closeDeployModal();
+          showToast(`🚀 Server '${hostname}' deployed successfully! Access details sent to your account.`);
+        }, 1200);
+      }, 3000);
+    }
+
+    // 7. Execute Simulated Login
+    function executeLogin() {
+      const email = document.getElementById('login-email').value;
+      closeLoginModal();
+      showToast(`Welcome back! Authenticated as ${email}.`);
+    }
+
+    // 8. Mobile Menu Drawer Controls
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+
+    mobileToggle.addEventListener('click', () => {
+      mobileDrawer.classList.toggle('open');
+    });
+
+    function closeMobileMenu() {
+      mobileDrawer.classList.remove('open');
+    }
+
+    // 9. FAQ Accordion Toggle
+    function toggleFaq(button) {
+      const item = button.parentElement;
+      const isActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+
+    // 10. Live Datacenter Ping Simulator
+    function testPing(card, regionName, baseLatency) {
+      const statusText = card.querySelector('.ping-status');
+      const origText = statusText.textContent;
+      statusText.textContent = '⚡ Pinging route...';
+      statusText.style.color = 'var(--accent-primary)';
+
+      setTimeout(() => {
+        const jitter = (Math.random() * 0.4 - 0.2).toFixed(1);
+        const finalLatency = Math.max(0.5, (parseFloat(baseLatency) + parseFloat(jitter))).toFixed(1);
+        statusText.textContent = `● ${finalLatency}ms (Optimal - 0% loss)`;
+        statusText.style.color = 'var(--status-emerald)';
+        showToast(`Route to ${regionName}: ${finalLatency}ms latency via Anycast.`);
+      }, 600);
+    }
+
+    // 11. Navbar backdrop scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.style.borderBottomColor = 'rgba(45, 59, 85, 0.8)';
+        navbar.style.background = 'rgba(7, 9, 14, 0.98)';
+      } else {
+        navbar.style.borderBottomColor = 'var(--border-subtle)';
+        navbar.style.background = 'rgba(7, 9, 14, 0.9)';
+      }
+    });
+
+    // 12. Dynamic Telemetry subtle live simulation
+    setInterval(() => {
+      const cpuElem = document.getElementById('telemetry-cpu');
+      const iopsElem = document.getElementById('telemetry-iops');
+      if (cpuElem && iopsElem) {
+        const cpu = (Math.random() * 3 + 2.5).toFixed(1);
+        const iops = (Math.random() * 15 + 115).toFixed(1);
+        cpuElem.textContent = `${cpu}%`;
+        iopsElem.textContent = `${iops}k`;
+      }
+    }, 4000);
   </script>
 </body>
 </html>
-
