@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexusVPS | Ultra-Fast Cloud VPS & Dedicated NVMe Hosting</title>
+  <meta name="description" content="Deploy high-performance virtual private servers in under 30 seconds. Powered by AMD EPYC cores, Gen4 NVMe storage, and 10Gbps unmetered network." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* ==========================================================================
+       CSS RESET & DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Dark Tech Slate Color System (Harmonious & Non-cliché) */
+      --bg-base: #07090e;
+      --bg-surface: #0e131f;
+      --bg-surface-raised: #141b2d;
+      --bg-surface-hover: #1c263f;
+      
+      --border-subtle: #1e293b;
+      --border-medium: #2d3b55;
+      --border-bright: #3e5176;
+
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      
+      /* Primary Accent: Electric Cyan & Deep Sapphire */
+      --accent-primary: #0ea5e9;
+      --accent-primary-hover: #38bdf8;
+      --accent-glow: rgba(14, 165, 233, 0.15);
+      
+      /* Status & Indicator Colors */
+      --status-emerald: #10b981;
+      --status-emerald-glow: rgba(16, 185, 129, 0.2);
+      --badge-bg: rgba(14, 165, 233, 0.08);
+      --badge-border: rgba(14, 165, 233, 0.25);
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      
+      --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      selection-background-color: var(--accent-primary);
+      selection-color: #ffffff;
+    }
+
+    ::selection {
+      background: rgba(14, 165, 233, 0.3);
+      color: #ffffff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* Container Utility */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    /* ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: border-color var(--transition-fast);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .brand-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface-raised);
+      color: var(--text-primary);
+      border: 1px solid var(--border-medium);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--border-bright);
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: #04131f;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      color: var(--text-primary);
+      padding: 0.5rem;
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero-section {
+      padding: 5rem 0 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow-bg {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 750px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(7, 9, 14, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .live-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-medium);
+      padding: 0.375rem 0.875rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--status-emerald);
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 0 8px var(--status-emerald);
+    }
+
+    .status-dot::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 50%;
+      border: 1px solid var(--status-emerald);
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.6); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+
+    .hero-title {
+      font-size: 3.125rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .hero-highlight {
+      color: var(--accent-primary-hover);
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      max-width: 540px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions .btn {
+      padding: 0.8125rem 1.75rem;
+      font-size: 1rem;
+    }
+
+    .hero-guarantee {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.5rem;
+    }
+
+    .guarantee-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .guarantee-item svg {
+      color: var(--accent-primary);
+      flex-shrink: 0;
+    }
+
+    /* Hero Interactive Terminal / Server Box */
+    .server-preview-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-header-bar {
+      background: var(--bg-surface-raised);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #334155;
+    }
+
+    .terminal-dots span:nth-child(1) { background: #ef4444; }
+    .terminal-dots span:nth-child(2) { background: #f59e0b; }
+    .terminal-dots span:nth-child(3) { background: #10b981; }
+
+    .terminal-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .server-card-body {
+      padding: 1.25rem;
+    }
+
+    .server-telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .telemetry-block {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .telemetry-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .telemetry-value {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .telemetry-sub {
+      font-size: 0.6875rem;
+      color: var(--status-emerald);
+      margin-top: 0.125rem;
+    }
+
+    .interactive-cli {
+      background: #05070a;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: #e2e8f0;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .cli-line {
+      margin-bottom: 0.375rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .cli-prompt {
+      color: var(--accent-primary);
+      user-select: none;
+    }
+
+    .cli-dim {
+      color: var(--text-muted);
+    }
+
+    .cli-success {
+      color: var(--status-emerald);
+      font-weight: 600;
+    }
+
+    .cli-progress-track {
+      width: 100%;
+      height: 4px;
+      background: #1e293b;
+      border-radius: var(--radius-full);
+      margin: 0.5rem 0 0.75rem;
+      overflow: hidden;
+    }
+
+    .cli-progress-fill {
+      width: 100%;
+      height: 100%;
+      background: var(--accent-primary);
+      animation: progress-load 3s ease-in-out infinite;
+    }
+
+    @keyframes progress-load {
+      0% { width: 0%; }
+      50% { width: 85%; }
+      100% { width: 100%; }
+    }
+
+    /* ==========================================================================
+       KEY METRICS / PROOF STRIP
+       ========================================================================== */
+    .metrics-strip {
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      padding: 2.25rem 0;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .metric-item {
+      text-align: left;
+      border-left: 2px solid var(--border-medium);
+      padding-left: 1.25rem;
+    }
+
+    .metric-val {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.375rem;
+    }
+
+    .metric-val span {
+      color: var(--accent-primary);
+    }
+
+    .metric-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       FEATURES SECTION
+       ========================================================================== */
+    .features-section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-size: 2.375rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      transition: all var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .feature-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-4px);
+      background: var(--bg-surface-raised);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-base);
+      border: 1px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-primary);
+      margin-bottom: 1.5rem;
+      transition: all var(--transition-fast);
+    }
+
+    .feature-card:hover .feature-icon-wrapper {
+      border-color: var(--accent-primary);
+      background: rgba(14, 165, 233, 0.08);
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+      letter-spacing: -0.015em;
+    }
+
+    .feature-body {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    .feature-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      margin-top: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       PRICING SECTION & TABLE
+       ========================================================================== */
+    .pricing-section {
+      padding: 6rem 0;
+      background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-surface) 100%);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .billing-toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .billing-label {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .billing-label.active {
+      color: var(--text-primary);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .toggle-handle {
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      width: 20px;
+      height: 20px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      transition: transform var(--transition-fast);
+    }
+
+    .toggle-switch.annual .toggle-handle {
+      transform: translateX(22px);
+    }
+
+    .save-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--status-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-full);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all var(--transition-smooth);
+    }
+
+    .pricing-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pricing-card.featured {
+      background: var(--bg-surface-raised);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 30px rgba(14, 165, 233, 0.15);
+      transform: scale(1.03);
+      z-index: 2;
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.03) translateY(-4px);
+    }
+
+    .popular-ribbon {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-primary);
+      color: #04131f;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.875rem;
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 10px rgba(14, 165, 233, 0.4);
+    }
+
+    .plan-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.375rem;
+    }
+
+    .plan-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      min-height: 2.5rem;
+    }
+
+    .price-box {
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .currency {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .amount {
+      font-size: 2.75rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .period {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .plan-specs {
+      list-style: none;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .spec-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.875rem;
+    }
+
+    .spec-label {
+      color: var(--text-secondary);
+    }
+
+    .spec-val {
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+    }
+
+    .plan-features-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .plan-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.625rem;
+    }
+
+    .plan-feature-item svg {
+      color: var(--status-emerald);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pricing-card .btn {
+      width: 100%;
+    }
+
+    /* ==========================================================================
+       INTERACTIVE RESOURCE CALCULATOR
+       ========================================================================== */
+    .calculator-section {
+      padding: 5rem 0;
+      background: var(--bg-base);
+    }
+
+    .calc-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .calc-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slider-label {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .slider-value-display {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+
+    .custom-range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface-raised);
+      outline: none;
+    }
+
+    .custom-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent-glow);
+      transition: transform var(--transition-fast);
+    }
+
+    .custom-range::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .calc-summary-box {
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .calc-price-title {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-total-price {
+      font-size: 3rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-total-price span {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+    }
+
+    /* ==========================================================================
+       DATACENTER GLOBAL REGIONS
+       ========================================================================== */
+    .locations-section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .location-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .flag-icon {
+      font-size: 1.5rem;
+    }
+
+    .location-info h4 {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .location-info p {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--status-emerald);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      background: #040609;
+      border-top: 1px solid var(--border-subtle);
+      padding: 4.5rem 0 2.5rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    .footer-column h5 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .pricing-card.featured {
+        transform: none;
+      }
+      .pricing-card.featured:hover {
+        transform: translateY(-4px);
+      }
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .calc-card {
+        grid-template-columns: 1fr;
+      }
+      .locations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-toggle {
+        display: block;
+      }
+      .hero-title {
+        font-size: 2rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      .locations-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <header class="site-header" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" id="brand-logo">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+          </svg>
+        </div>
+        <span>Nexus<span style="color: var(--accent-primary);">VPS</span></span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#features" class="nav-link" id="nav-features">Features</a></li>
+          <li><a href="#pricing" class="nav-link" id="nav-pricing">Pricing</a></li>
+          <li><a href="#calculator" class="nav-link" id="nav-calc">Customizer</a></li>
+          <li><a href="#locations" class="nav-link" id="nav-locations">Datacenters</a></li>
+          <li><a href="#docs" class="nav-link" id="nav-docs">Docs & API</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#login" class="btn btn-secondary" id="btn-portal">Client Login</a>
+        <a href="#pricing" class="btn btn-primary" id="btn-deploy-nav">Deploy VPS</a>
+        <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+  <main>
+    <section class="hero-section" id="hero">
+      <div class="hero-glow-bg"></div>
+      <div class="container hero-grid">
+        
+        <div class="hero-content">
+          <div class="live-status-pill">
+            <span class="status-dot"></span>
+            <span>All 24 Global Datacenters 100% Operational</span>
+          </div>
+
+          <h1 class="hero-title">
+            Ultra-Low Latency Cloud VPS Built for <span class="hero-highlight">Raw Compute</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Deploy enterprise-grade AMD EPYC™ and Intel Xeon® virtual servers with PCIe 4.0 NVMe storage in under 30 seconds. Full root access, unmetered 10Gbps uplinks, and DDoS immunity included.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#pricing" class="btn btn-primary" id="hero-cta-deploy">
+              <span>Deploy Server Now</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="#calculator" class="btn btn-secondary" id="hero-cta-calc">Configure Custom Spec</a>
+          </div>
+
+          <div class="hero-guarantee">
+            <div class="guarantee-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Instant 30s Provisioning</span>
+            </div>
+            <div class="guarantee-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>99.99% Uptime SLA</span>
+            </div>
+            <div class="guarantee-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>7-Day Money-Back</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Server Diagnostic Box -->
+        <div class="hero-visual">
+          <div class="server-preview-card">
+            <div class="card-header-bar">
+              <div class="terminal-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="terminal-label">nexus-vps-node-fra01.sh</span>
+              <span style="font-size: 0.75rem; color: var(--status-emerald); font-family: var(--font-mono);">ONLINE</span>
+            </div>
+            <div class="server-card-body">
+              
+              <div class="server-telemetry-row">
+                <div class="telemetry-block">
+                  <div class="telemetry-label">CPU Usage</div>
+                  <div class="telemetry-value">3.4%</div>
+                  <div class="telemetry-sub">AMD EPYC 9654</div>
+                </div>
+                <div class="telemetry-block">
+                  <div class="telemetry-label">Disk IOPS</div>
+                  <div class="telemetry-value">124.5k</div>
+                  <div class="telemetry-sub">Gen4 NVMe RAID</div>
+                </div>
+                <div class="telemetry-block">
+                  <div class="telemetry-label">Network Port</div>
+                  <div class="telemetry-value">10 Gbps</div>
+                  <div class="telemetry-sub">0.4ms Gateway</div>
+                </div>
+              </div>
+
+              <div class="interactive-cli">
+                <div class="cli-line">
+                  <span class="cli-prompt">root@nexus-vps:~#</span>
+                  <span>curl -sSL https://get.nexusvps.io/provision | bash</span>
+                </div>
+                <div class="cli-line cli-dim">
+                  <span>[+] Allocating dedicated vCPU cores... Done</span>
+                </div>
+                <div class="cli-line cli-dim">
+                  <span>[+] Attaching NVMe block storage with write-back cache...</span>
+                </div>
+                <div class="cli-progress-track">
+                  <div class="cli-progress-fill"></div>
+                </div>
+                <div class="cli-line cli-success">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>Server ready in 14.8s. IPv4: 194.26.29.112 assigned.</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         METRICS / BENCHMARK PROOF STRIP
+         ========================================================================== -->
+    <section class="metrics-strip">
+      <div class="container metrics-grid">
+        <div class="metric-item">
+          <div class="metric-val">99.99<span>%</span></div>
+          <div class="metric-desc">SLA Guaranteed Uptime with auto-failover</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">&lt; 30<span>s</span></div>
+          <div class="metric-desc">Automated provisioning & snapshot restore</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">3.2<span>Tbps</span></div>
+          <div class="metric-desc">Real-time DDoS edge filtering capacity</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">24<span>+</span></div>
+          <div class="metric-desc">Tier-3 and Tier-4 global datacenter zones</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURE CARDS
+         ========================================================================== -->
+    <section class="features-section" id="features">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Engineered for Reliability</span>
+          <h2 class="section-title">Enterprise Cloud Architecture Without the Hyperscaler Complexity</h2>
+          <p class="section-desc">Every VPS instance runs on pure enterprise hardware with isolated virtualization, predictable billing, and uncompromised performance.</p>
+        </div>
+
+        <div class="features-grid">
+          
+          <div class="feature-card" id="feature-nvme">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12H2"></path>
+                <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+                <line x1="6" y1="16" x2="6.01" y2="16"></line>
+                <line x1="10" y1="16" x2="10.01" y2="16"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Pure Gen4 NVMe Storage</h3>
+            <p class="feature-body">Experience blazingly fast read/write throughput up to 7,000 MB/s configured in hardware RAID 10 for absolute data resilience and high-IOPS databases.</p>
+            <div class="feature-tag">Up to 150k IOPS &rarr;</div>
+          </div>
+
+          <div class="feature-card" id="feature-cpu">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                <rect x="9" y="9" width="6" height="6"></rect>
+                <line x1="9" y1="1" x2="9" y2="4"></line>
+                <line x1="15" y1="1" x2="15" y2="4"></line>
+                <line x1="9" y1="20" x2="9" y2="23"></line>
+                <line x1="15" y1="20" x2="15" y2="23"></line>
+                <line x1="20" y1="9" x2="23" y2="9"></line>
+                <line x1="20" y1="14" x2="23" y2="14"></line>
+                <line x1="1" y1="9" x2="4" y2="9"></line>
+                <line x1="1" y1="14" x2="4" y2="14"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Dedicated EPYC™ Cores</h3>
+            <p class="feature-body">Zero noisy neighbors. Our KVM virtualization enforces strict hardware isolation so your compute cycles, CPU cache, and RAM allocations are 100% dedicated to you.</p>
+            <div class="feature-tag">KVM Full Virtualization &rarr;</div>
+          </div>
+
+          <div class="feature-card" id="feature-ddos">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">3.2 Tbps DDoS Shield</h3>
+            <p class="feature-body">Always-on, multi-layer L3/L4/L7 threat mitigation that filters malicious volumetric attacks in under 1 second without increasing your legitimate traffic's latency.</p>
+            <div class="feature-tag">Free on All Tiers &rarr;</div>
+          </div>
+
+          <div class="feature-card" id="feature-network">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">10Gbps Redundant Uplink</h3>
+            <p class="feature-body">Connected directly to Tier-1 upstream transit providers (Telia, Lumen, NTT) and major IXPs with unmetered bandwidth quotas on select high-performance tiers.</p>
+            <div class="feature-tag">BGP Anycast Routing &rarr;</div>
+          </div>
+
+          <div class="feature-card" id="feature-root">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"></polyline>
+                <line x1="12" y1="19" x2="20" y2="19"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Full Root & Custom ISOs</h3>
+            <p class="feature-body">Complete control over your server environment. Mount any custom Linux, FreeBSD, or Windows ISO, configure custom kernel modules, or run Docker & Kubernetes clusters.</p>
+            <div class="feature-tag">SSH Keys & VNC Console &rarr;</div>
+          </div>
+
+          <div class="feature-card" id="feature-snapshots">
+            <div class="feature-icon-wrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <h3 class="feature-title">Automated Daily Backups</h3>
+            <p class="feature-body">Create instantaneous hot snapshots without rebooting. Schedule automated off-site backups with point-in-time recovery and 1-click instance cloning.</p>
+            <div class="feature-tag">Snapshot API Ready &rarr;</div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PRICING TABLE SECTION
+         ========================================================================== -->
+    <section class="pricing-section" id="pricing">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Transparent Pricing</span>
+          <h2 class="section-title">Predictable Cloud Plans. No Hidden Bandwidth Overage Fees.</h2>
+          <p class="section-desc">Choose the optimal configuration for your workload. Upgrade, downgrade, or cancel at any time with pro-rated billing.</p>
+        </div>
+
+        <!-- Billing Toggle -->
+        <div class="billing-toggle-container">
+          <span class="billing-label active" id="label-monthly">Monthly Billing</span>
+          <div class="toggle-switch" id="billing-toggle" role="button" tabindex="0" aria-label="Toggle annual billing">
+            <div class="toggle-handle"></div>
+          </div>
+          <span class="billing-label" id="label-annual">Annual Billing</span>
+          <span class="save-badge">Save 20% + Free Snapshot</span>
+        </div>
+
+        <!-- Pricing Cards Grid -->
+        <div class="pricing-grid">
+          
+          <!-- Plan 1: Starter -->
+          <div class="pricing-card" id="plan-starter">
+            <div class="plan-name">Starter Cloud</div>
+            <div class="plan-desc">Ideal for small APIs, staging environments, and lightweight microservices.</div>
+            
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="amount" data-monthly="4.99" data-annual="3.99">4.99</span>
+              <span class="period">/mo</span>
+            </div>
+
+            <ul class="plan-specs">
+              <li class="spec-item">
+                <span class="spec-label">vCPU Cores</span>
+                <span class="spec-val">1 Core</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">DDR5 RAM</span>
+                <span class="spec-val">2 GB</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">NVMe Storage</span>
+                <span class="spec-val">40 GB</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">Bandwidth</span>
+                <span class="spec-val">2 TB / 1Gbps</span>
+              </li>
+            </ul>
+
+            <ul class="plan-features-list">
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>1 Dedicated IPv4 + /64 IPv6</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>3.2 Tbps DDoS Protection</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Full Root / SSH Access</span>
+              </li>
+            </ul>
+
+            <a href="#deploy-starter" class="btn btn-secondary">Deploy Starter</a>
+          </div>
+
+          <!-- Plan 2: Pro Compute (FEATURED) -->
+          <div class="pricing-card featured" id="plan-pro">
+            <div class="popular-ribbon">Most Popular</div>
+            <div class="plan-name">Pro Compute</div>
+            <div class="plan-desc">Engineered for production apps, e-commerce stores, and high-traffic databases.</div>
+            
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="amount" data-monthly="14.99" data-annual="11.99">14.99</span>
+              <span class="period">/mo</span>
+            </div>
+
+            <ul class="plan-specs">
+              <li class="spec-item">
+                <span class="spec-label">vCPU Cores</span>
+                <span class="spec-val">2 Dedicated Cores</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">DDR5 RAM</span>
+                <span class="spec-val">4 GB ECC</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">NVMe Storage</span>
+                <span class="spec-val">80 GB Gen4</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">Bandwidth</span>
+                <span class="spec-val">5 TB / 10Gbps</span>
+              </li>
+            </ul>
+
+            <ul class="plan-features-list">
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>1 Dedicated IPv4 + /64 IPv6</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Free Automated Daily Backups</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>2 Free On-Demand Snapshots</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Priority 15-min Ticket Support</span>
+              </li>
+            </ul>
+
+            <a href="#deploy-pro" class="btn btn-primary">Deploy Pro VPS</a>
+          </div>
+
+          <!-- Plan 3: Scale Master -->
+          <div class="pricing-card" id="plan-scale">
+            <div class="plan-name">Scale Master</div>
+            <div class="plan-desc">For heavy workloads, Redis caches, AI worker nodes, and game servers.</div>
+            
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="amount" data-monthly="29.99" data-annual="23.99">29.99</span>
+              <span class="period">/mo</span>
+            </div>
+
+            <ul class="plan-specs">
+              <li class="spec-item">
+                <span class="spec-label">vCPU Cores</span>
+                <span class="spec-val">4 Dedicated Cores</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">DDR5 RAM</span>
+                <span class="spec-val">8 GB ECC</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">NVMe Storage</span>
+                <span class="spec-val">160 GB Gen4</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">Bandwidth</span>
+                <span class="spec-val">10 TB / 10Gbps</span>
+              </li>
+            </ul>
+
+            <ul class="plan-features-list">
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>2 Dedicated IPv4 + /64 IPv6</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Automated Snapshots & Backups</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>BGP Anycast Routing Option</span>
+              </li>
+            </ul>
+
+            <a href="#deploy-scale" class="btn btn-secondary">Deploy Scale</a>
+          </div>
+
+          <!-- Plan 4: Enterprise Dedicated -->
+          <div class="pricing-card" id="plan-enterprise">
+            <div class="plan-name">Enterprise Node</div>
+            <div class="plan-desc">Maximum isolated CPU compute and memory throughput with custom SLAs.</div>
+            
+            <div class="price-box">
+              <span class="currency">$</span>
+              <span class="amount" data-monthly="59.99" data-annual="47.99">59.99</span>
+              <span class="period">/mo</span>
+            </div>
+
+            <ul class="plan-specs">
+              <li class="spec-item">
+                <span class="spec-label">vCPU Cores</span>
+                <span class="spec-val">8 Dedicated Cores</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">DDR5 RAM</span>
+                <span class="spec-val">16 GB ECC</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">NVMe Storage</span>
+                <span class="spec-val">320 GB Gen4</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-label">Bandwidth</span>
+                <span class="spec-val">Unmetered 10Gbps</span>
+              </li>
+            </ul>
+
+            <ul class="plan-features-list">
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>4 Dedicated IPv4 + /48 IPv6 Subnet</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Dedicated Technical Account Manager</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>99.999% High Availability SLA</span>
+              </li>
+            </ul>
+
+            <a href="#deploy-enterprise" class="btn btn-secondary">Deploy Enterprise</a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         INTERACTIVE CUSTOM SPEC CALCULATOR
+         ========================================================================== -->
+    <section class="calculator-section" id="calculator">
+      <div class="container">
+        
+        <div class="section-header">
+          <span class="section-tag">Custom Sizing</span>
+          <h2 class="section-title">Need Exact Specifications? Build Your Custom VPS.</h2>
+          <p class="section-desc">Adjust the sliders below to tailor CPU, memory, and NVMe disk space to your exact project demands.</p>
+        </div>
+
+        <div class="calc-card">
+          <div class="calc-controls">
+            
+            <div class="slider-group">
+              <div class="slider-header">
+                <span class="slider-label">CPU Cores</span>
+                <span class="slider-value-display" id="cpu-val-text">2 Cores (AMD EPYC)</span>
+              </div>
+              <input type="range" class="custom-range" id="cpu-slider" min="1" max="16" step="1" value="2" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <span class="slider-label">DDR5 ECC RAM</span>
+                <span class="slider-value-display" id="ram-val-text">4 GB</span>
+              </div>
+              <input type="range" class="custom-range" id="ram-slider" min="2" max="64" step="2" value="4" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <span class="slider-label">Gen4 NVMe Storage</span>
+                <span class="slider-value-display" id="disk-val-text">80 GB</span>
+              </div>
+              <input type="range" class="custom-range" id="disk-slider" min="20" max="1000" step="20" value="80" />
+            </div>
+
+          </div>
+
+          <div class="calc-summary-box">
+            <div class="calc-price-title">Estimated Monthly Cost</div>
+            <div class="calc-total-price" id="calc-price-display">$14.00<span>/mo</span></div>
+            <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+              Billed hourly at ~$0.019/hr. Unmetered 10Gbps port & DDoS protection included.
+            </p>
+            <button class="btn btn-primary" style="width: 100%;" id="btn-deploy-custom">Deploy Custom Instance</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         GLOBAL DATACENTER LOCATIONS
+         ========================================================================== -->
+    <section class="locations-section" id="locations">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Global Low Latency</span>
+          <h2 class="section-title">24 Tier-4 Datacenter Edge Locations</h2>
+          <p class="section-desc">Host your workloads closer to your global audience with average edge latency under 15ms.</p>
+        </div>
+
+        <div class="locations-grid">
+          <div class="location-card">
+            <span class="flag-icon">🇩🇪</span>
+            <div class="location-info">
+              <h4>Frankfurt, Germany</h4>
+              <p>● 1.2ms Avg IXP Latency</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <span class="flag-icon">🇺🇸</span>
+            <div class="location-info">
+              <h4>New York, USA</h4>
+              <p>● 2.8ms East Coast Hub</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <span class="flag-icon">🇯🇵</span>
+            <div class="location-info">
+              <h4>Tokyo, Japan</h4>
+              <p>● 3.1ms AP-East Hub</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <span class="flag-icon">🇸🇬</span>
+            <div class="location-info">
+              <h4>Singapore</h4>
+              <p>● 1.9ms ASEAN Gateway</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <span class="flag-icon">🇬🇧</span>
+            <div class="location-info">
+              <h4>London, UK</h4>
+              <p>● 1.4ms LINX Connected</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <span class="flag-icon">🇺🇸</span>
+            <div class="location-info">
+              <h4>San Jose, USA</h4>
+              <p>● 1.8ms Silicon Valley</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <span class="flag-icon">🇦🇺</span>
+            <div class="location-info">
+              <h4>Sydney, Australia</h4>
+              <p>● 4.2ms OCE Hub</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <span class="flag-icon">🇳🇱</span>
+            <div class="location-info">
+              <h4>Amsterdam, NL</h4>
+              <p>● 0.9ms AMS-IX Node</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <a href="#" class="brand-logo">
+            <div class="brand-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <span>Nexus<span style="color: var(--accent-primary);">VPS</span></span>
+          </a>
+          <p>High-performance virtual cloud infrastructure designed for developers, startups, and enterprise applications requiring zero-compromise speed and reliability.</p>
+        </div>
+
+        <div class="footer-column">
+          <h5>Products</h5>
+          <ul class="footer-links">
+            <li><a href="#pricing">Cloud NVMe VPS</a></li>
+            <li><a href="#pricing">Dedicated CPU Instances</a></li>
+            <li><a href="#pricing">Kubernetes Node Pools</a></li>
+            <li><a href="#pricing">Block Storage Volumes</a></li>
+            <li><a href="#pricing">Object Storage (S3)</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h5>Resources</h5>
+          <ul class="footer-links">
+            <li><a href="#">API Documentation</a></li>
+            <li><a href="#">Terraform Provider</a></li>
+            <li><a href="#">Looking Glass & Speed Test</a></li>
+            <li><a href="#">System Status Dashboard</a></li>
+            <li><a href="#">Community Tutorials</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h5>Company</h5>
+          <ul class="footer-links">
+            <li><a href="#">About NexusVPS</a></li>
+            <li><a href="#">SLA & Network Guarantee</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact 24/7 Support</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 NexusVPS Cloud Infrastructure Inc. All rights reserved.</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#">Status: 100% Operational</a>
+          <a href="#">Security ISO 27001 Certified</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       INTERACTIVE JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Billing Period Toggle (Monthly vs Annual with 20% discount)
+      const billingToggle = document.getElementById('billing-toggle');
+      const labelMonthly = document.getElementById('label-monthly');
+      const labelAnnual = document.getElementById('label-annual');
+      const priceAmounts = document.querySelectorAll('.pricing-card .amount');
+      let isAnnual = false;
+
+      function updatePricing() {
+        if (isAnnual) {
+          billingToggle.classList.add('annual');
+          labelAnnual.classList.add('active');
+          labelMonthly.classList.remove('active');
+        } else {
+          billingToggle.classList.remove('annual');
+          labelMonthly.classList.add('active');
+          labelAnnual.classList.remove('active');
+        }
+
+        priceAmounts.forEach(amt => {
+          const val = isAnnual ? amt.getAttribute('data-annual') : amt.getAttribute('data-monthly');
+          if (val) {
+            amt.textContent = val;
+          }
+        });
+      }
+
+      billingToggle.addEventListener('click', () => {
+        isAnnual = !isAnnual;
+        updatePricing();
+      });
+
+      labelMonthly.addEventListener('click', () => {
+        isAnnual = false;
+        updatePricing();
+      });
+
+      labelAnnual.addEventListener('click', () => {
+        isAnnual = true;
+        updatePricing();
+      });
+
+      // 2. Custom Spec Calculator
+      const cpuSlider = document.getElementById('cpu-slider');
+      const ramSlider = document.getElementById('ram-slider');
+      const diskSlider = document.getElementById('disk-slider');
+
+      const cpuText = document.getElementById('cpu-val-text');
+      const ramText = document.getElementById('ram-val-text');
+      const diskText = document.getElementById('disk-val-text');
+      const calcPriceDisplay = document.getElementById('calc-price-display');
+
+      function calculateCustomPrice() {
+        const cpu = parseInt(cpuSlider.value, 10);
+        const ram = parseInt(ramSlider.value, 10);
+        const disk = parseInt(diskSlider.value, 10);
+
+        cpuText.textContent = `${cpu} ${cpu === 1 ? 'Core' : 'Cores'} (AMD EPYC)`;
+        ramText.textContent = `${ram} GB`;
+        diskText.textContent = `${disk} GB`;
+
+        // Pricing formula: $3/vCPU + $1.5/GB RAM + $0.05/GB NVMe Storage
+        const monthlyTotal = (cpu * 3) + (ram * 1.5) + (disk * 0.05);
+        calcPriceDisplay.innerHTML = `$${monthlyTotal.toFixed(2)}<span>/mo</span>`;
+      }
+
+      cpuSlider.addEventListener('input', calculateCustomPrice);
+      ramSlider.addEventListener('input', calculateCustomPrice);
+      diskSlider.addEventListener('input', calculateCustomPrice);
+      calculateCustomPrice();
+
+      // 3. Smooth header backdrop tweak on scroll
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          navbar.style.borderBottomColor = 'rgba(45, 59, 85, 0.8)';
+          navbar.style.background = 'rgba(7, 9, 14, 0.95)';
+        } else {
+          navbar.style.borderBottomColor = 'var(--border-subtle)';
+          navbar.style.background = 'rgba(7, 9, 14, 0.85)';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
